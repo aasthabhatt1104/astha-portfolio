@@ -1037,6 +1037,23 @@
         height: 28px;
     }
 }
+/* Make download button responsive on all screen sizes */
+.download-inner {
+    width: 100%;
+}
+
+.btn-download {
+    max-width: 250px;
+}
+
+@media (max-width: 768px) {
+    .btn-download {
+        width: 100% !important;
+        max-width: none !important;
+        margin-top: 1rem;
+    }
+}
+
 
     </style>
 </head>
@@ -1377,14 +1394,14 @@
     <section id="contact">
         <h2 class="section-title">Get In Touch</h2>
         <p class="contact-intro">I'd love to hear from you! Whether you have a question or just want to say hi, feel free to reach out.</p>
-<form class="contact-form" id="contactForm" 
+<form class="contact-form" id="contactForm"     
       action="https://formsubmit.co/2e8a9f98eaeaaca48c2e36cb30f2ad47" 
       method="POST">
+
 
     <input type="hidden" name="_captcha" value="false">
     <input type="hidden" name="_template" value="table">
     <input type="hidden" name="_subject" value="New Contact Form Message">
-    <input type="hidden" name="_next" value="https://formsubmit.co/thank-you">
 
     <div class="form-group">
         <label for="name">Name</label>
@@ -1406,6 +1423,7 @@
 
     <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
 </form>
+
 
     </section>
 
