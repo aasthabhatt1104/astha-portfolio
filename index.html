@@ -995,6 +995,49 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+        /* Better Responsive Behavior for Download Card */
+@media (max-width: 768px) {
+    .download-content-wrapper {
+        padding: 2rem 1.5rem;
+    }
+
+    .download-inner {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+
+    .download-text-section {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .file-icon {
+        margin-bottom: 1rem;
+    }
+
+    .btn-download {
+        width: 100%;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .download-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .download-card p {
+        font-size: 0.9rem;
+    }
+
+    .file-icon svg {
+        width: 28px;
+        height: 28px;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -1315,14 +1358,17 @@
                         <p>Get the complete PDF version with detailed information about my projects, skills, and experience.</p>
                     </div>
                 </div>
-                <button class="btn-download" onclick="downloadResume()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <button class="btn-download" onclick="downloadResume()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" 
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                         <polyline points="7 10 12 15 17 10"/>
                         <line x1="12" x2="12" y1="15" y2="3"/>
                     </svg>
                     Download PDF
                 </button>
+
             </div>
         </div>
     </div>
@@ -1331,25 +1377,36 @@
     <section id="contact">
         <h2 class="section-title">Get In Touch</h2>
         <p class="contact-intro">I'd love to hear from you! Whether you have a question or just want to say hi, feel free to reach out.</p>
-        
-        <form class="contact-form" id="contactForm">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" placeholder="Your name">
-                <span class="error-message">Please enter your name</span>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="your.email@example.com">
-                <span class="error-message">Please enter a valid email</span>
-            </div>
-            <div class="form-group">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" placeholder="Your message here..."></textarea>
-                <span class="error-message">Please enter a message</span>
-            </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
-        </form>
+<form class="contact-form" id="contactForm" 
+      action="https://formsubmit.co/2e8a9f98eaeaaca48c2e36cb30f2ad47" 
+      method="POST">
+
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_subject" value="New Contact Form Message">
+    <input type="hidden" name="_next" value="https://formsubmit.co/thank-you">
+
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your name">
+        <span class="error-message">Please enter your name</span>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="your.email@example.com">
+        <span class="error-message">Please enter a valid email</span>
+    </div>
+
+    <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Your message here..."></textarea>
+        <span class="error-message">Please enter a message</span>
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+</form>
+
     </section>
 
     <!-- Footer -->
@@ -1474,54 +1531,47 @@
         }
 
         // Resume Download
-// Resume Download Function
+
                 function downloadResume() {
-                    showToast('Resume download will start shortly', 'info');
-                    // In a real scenario, you would trigger an actual download here
-                    // window.open('path-to-resume.pdf', '_blank');
+                    showToast('Your resume download will start shortly', 'info');
+                    window.location.href = "assets/Astha_Resume.pdf";
                 }
+
 
         // Form Validation and Submission
         const contactForm = document.getElementById('contactForm');
 
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Clear previous errors
-            document.querySelectorAll('.form-group').forEach(group => {
-                group.classList.remove('error');
-            });
+contactForm.addEventListener('submit', (e) => {
+    // stop JS errors and validate first
+    let isValid = true;
 
-            let isValid = true;
+    document.querySelectorAll('.form-group').forEach(group => {
+        group.classList.remove('error');
+    });
 
-            // Validate name
-            const name = document.getElementById('name');
-            if (name.value.trim() === '') {
-                name.closest('.form-group').classList.add('error');
-                isValid = false;
-            }
+    const name = document.getElementById('name');
+    const email = document.getElementById('email');
+    const message = document.getElementById('message');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-            // Validate email
-            const email = document.getElementById('email');
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email.value.trim())) {
-                email.closest('.form-group').classList.add('error');
-                isValid = false;
-            }
+    if (name.value.trim() === '') {
+        name.closest('.form-group').classList.add('error');
+        isValid = false;
+    }
+    if (!emailRegex.test(email.value.trim())) {
+        email.closest('.form-group').classList.add('error');
+        isValid = false;
+    }
+    if (message.value.trim() === '') {
+        message.closest('.form-group').classList.add('error');
+        isValid = false;
+    }
 
-            // Validate message
-            const message = document.getElementById('message');
-            if (message.value.trim() === '') {
-                message.closest('.form-group').classList.add('error');
-                isValid = false;
-            }
+    if (!isValid) {
+        e.preventDefault(); // stop only IF errors
+    }
+});
 
-            // If form is valid, show success message and clear form
-            if (isValid) {
-                showToast("Thank you for your message! I'll get back to you soon.", 'success');
-                contactForm.reset();
-            }
-        });
 
         // Smooth scroll for anchor links (fallback for older browsers)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
