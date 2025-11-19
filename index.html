@@ -1400,7 +1400,6 @@
 
 
     <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_template" value="table">
     <input type="hidden" name="_subject" value="New Contact Form Message">
 
     <div class="form-group">
@@ -1621,6 +1620,51 @@ contactForm.addEventListener('submit', (e) => {
         skillCategories.forEach(category => {
             skillObserver.observe(category);
         });
+
+        contactForm.addEventListener("submit", function (e) {
+    e.preventDefault(); // stop page reload
+
+    // Validate
+    let isValid = true;
+
+    document.querySelectorAll('.form-group').forEach(group => {
+        group.classList.remove('error');
+    });
+
+    const name = document.getElementById('name');
+    const email = document.getElementById('email');
+    const message = document.getElementById('message');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (name.value.trim() === '') {
+        name.closest('.form-group').classList.add('error');
+        isValid = false;
+    }
+    if (!emailRegex.test(email.value.trim())) {
+        email.closest('.form-group').classList.add('error');
+        isValid = false;
+    }
+    if (message.value.trim() === '') {
+        message.closest('.form-group').classList.add('error');
+        isValid = false;
+    }
+
+    if (!isValid) return;
+
+    // If valid → Submit using fetch
+    fetch(contactForm.action, {
+        method: "POST",
+        body: new FormData(contactForm),
+    })
+    .then(() => {
+        showToast("Thank you for your interest! 😊 I'll get back to you very soon.", "success");
+        contactForm.reset(); // clear form
+    })
+    .catch(() => {
+        showToast("Something went wrong ❗ Please try again.", "info");
+    });
+});
+
     </script>
 </body>
 </html>
